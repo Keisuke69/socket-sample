@@ -8,8 +8,16 @@ block content
       var socket = io.connect('http://localhost:3000');
         socket.on('hoge', function (data) {
             console.log(data);
-            document.getElementById("fuga").innerHTML = data.hello;
+            document.getElementById("message").innerHTML += data + "<br>";
         });
 
+      function submit(){
+        var message = document.getElementById("msg").value;
+        socket.emit("msg",message);
+      }
 
-    #fuga
+  input(name='msg')#msg
+  button(onclick='submit()') Submit
+
+  #message
+

@@ -12,7 +12,7 @@ var express = require('express')
 var app = express();
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', process.env.PORT || 8080);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -46,8 +46,12 @@ server.listen(app.get('port'), function(){
 
 io.sockets.on('connection', function (socket) { //コネクション接続時のイベント
   console.log("connected");// コネクション接続時の処理を記述
+  socket.on('msg', function(data){
+    var message = data;
+    console.log(data);
+    io.sockets.emit("hoge", message);
+  });
   //socket.emit('welcome', { hello: 'world' }
-  io.sockets.emit("hoge", { hello: "hogehogefufufu"});
  });
 
 
