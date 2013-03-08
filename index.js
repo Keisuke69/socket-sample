@@ -48,7 +48,15 @@ io.sockets.on('connection', function (socket) {
   var address = socket.handshake.address;
   console.log("connected from " + address.address + ":" + address.port);
   socket.on('msg', function(data){
-    var date = data.date;
+
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var day = ("0" + now.getDate()).slice(-2);
+    var hour = ("0" + now.getHours()).slice(-2);
+    var minute = ("0" + now.getMinutes()).slice(-2);
+    var second = ("0" + now.getSeconds()).slice(-2);
+    var date = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
     var message = data.message;
     console.log(data);
     io.sockets.emit("msg", {date : date, message : message});
