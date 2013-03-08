@@ -5,7 +5,6 @@ block content
   script
       var socket = io.connect('/');
         socket.on('msg', function (data) {
-            //console.log(data);
             document.getElementById("message").innerHTML += data.date + "  " + data.message + "<br>";
         });
 

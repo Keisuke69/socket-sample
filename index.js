@@ -35,14 +35,12 @@ app.get('/users', user.list);
 //});
 
 server = http.createServer(app);
-
+server.listen(app.get('port'), function(){
+  console.log("Server listening on port " + app.get('port'));
+});
 
 var socketio = require('socket.io');
 var io = socketio.listen(server,{"log level":2});
-
-server.listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
-});
 
 io.sockets.on('connection', function (socket) { 
   var address = socket.handshake.address;
