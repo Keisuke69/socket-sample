@@ -38,19 +38,23 @@ server = http.createServer(app);
 
 
 var socketio = require('socket.io');
-var io = socketio.listen(server);
+var io = socketio.listen(server,{"log level":2});
 
 server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
 io.sockets.on('connection', function (socket) { 
-  console.log("connected");
+  var address = socket.handshake.address;
+  console.log("connected from " + address.address + ":" + address.port);
   socket.on('msg', function(data){
     var date = data.date;
     var message = data.message;
     console.log(data);
     io.sockets.emit("msg", {date : date, message : message});
+  });
+  socket.on('disconnect', function () {
+    console.log("disconnectted from " + address.address + ":" + address.port) 
   });
  });
 
